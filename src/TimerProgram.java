@@ -50,6 +50,7 @@ public class TimerProgram implements ActionListener {
         startButton.setFont(new Font("Roboto", Font.PLAIN, 20));
         startButton.setFocusable(false);
         startButton.addActionListener(this);
+        startButton.setEnabled(false);
 
         setButton.setBounds(300,200,100,50);
         setButton.setFont(new Font("Roboto", Font.PLAIN, 20));
@@ -78,13 +79,14 @@ public class TimerProgram implements ActionListener {
 
     //Sets the stopwatch to the user input.
     public void set() {
-        JOptionPane.showInputDialog(null, "Enter the hours you want to add.", "Timer: Set Hours", null, null, null, null);
-        timer.stop();
+        int hrInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the hours you want to add (integer value)."));
+        int minInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the minutes you want to add (integer value)."));
+        int secInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the seconds you want to add (integer value)."));
 
-        elapsedTime = 0;
-        seconds = 0;
-        minutes = 0;
-        hours = 0;
+        elapsedTime = hrInput*3600000 + ; //updates time
+        hours = (elapsedTime/3600000); //updates hours 
+        minutes = (elapsedTime/60000) % 60; //updates minutes
+        seconds = (elapsedTime/1000) % 60;
 
         secString = String.format("%02d", seconds);
         minString = String.format("%02d", minutes);
@@ -103,16 +105,19 @@ public class TimerProgram implements ActionListener {
                 started = true;
                 startButton.setText("stop");
                 start();
+                setButton.setEnabled(false);
             }
             else {
                 started = false;
                 startButton.setText("start");
                 stop();
+                setButton.setEnabled(true);
             }
         }
 
         if (e.getSource() == setButton) {
             set();
+            startButton.setEnabled(true);
         }
     }
 
