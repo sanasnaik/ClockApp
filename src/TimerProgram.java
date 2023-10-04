@@ -36,9 +36,21 @@ public class TimerProgram implements ActionListener {
             
             timeLabel.setText(hrString + ":" + minString + ":" + secString);
 
-            if (remainingTime == 0) {
+            if (remainingTime <= 0) {
                 started = false;
                 startButton.setText("start");
+                
+                remainingTime = 0;
+                hours = 0;
+                minutes = 0;
+                seconds = 0;
+
+                secString = String.format("%02d", seconds);
+                minString = String.format("%02d", minutes);
+                hrString = String.format("%02d", hours);
+
+                timeLabel.setText(hrString + ":" + minString + ":" + secString);
+
                 stop();
                 setButton.setEnabled(true);
             }
@@ -96,6 +108,10 @@ public class TimerProgram implements ActionListener {
             secInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the seconds you want to add (integer value)."));
         }
         catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Wrong input, try again!");
+        }
+
+        if (hrInput < 0 || minInput < 0 || secInput < 0) {
             JOptionPane.showMessageDialog(null, "Wrong input, try again!");
         }
 
