@@ -14,7 +14,7 @@ public class TimerProgram implements ActionListener {
     //and it will start from that time
 
     JLabel timeLabel = new JLabel();
-    int elapsedTime = 0;
+    int remainingTime = 0;
     int seconds = 0;
     int minutes = 0;
     int hours = 0;
@@ -25,35 +25,42 @@ public class TimerProgram implements ActionListener {
     
     Timer timer = new Timer(1000, new ActionListener() { //every 1 second, do this
         public void actionPerformed(ActionEvent e) {
-            elapsedTime -= 1000; //updates time
-            hours = (elapsedTime/3600000); //updates hours 
-            minutes = (elapsedTime/60000) % 60; //updates minutes
-            seconds = (elapsedTime/1000) % 60;
+            remainingTime -= 1000; //updates time
+            hours = (remainingTime/3600000); //updates hours 
+            minutes = (remainingTime/60000) % 60; //updates minutes
+            seconds = (remainingTime/1000) % 60;
 
             secString = String.format("%02d", seconds);
             minString = String.format("%02d", minutes);
             hrString = String.format("%02d", hours);
             
-            timeLabel.setText(hrString + " : " + minString + " : " + secString);
+            timeLabel.setText(hrString + ":" + minString + ":" + secString);
+
+            if (remainingTime == 0) {
+                started = false;
+                startButton.setText("start");
+                stop();
+                setButton.setEnabled(true);
+            }
         }
     });
 
     TimerProgram() {
-        timeLabel.setText(hrString + " : " + minString + " : " + secString);
+        timeLabel.setText(hrString + ":" + minString + ":" + secString);
         timeLabel.setBounds(200, 100, 200, 100);
-        timeLabel.setFont(new Font("Roboto",Font.PLAIN, 35));
+        timeLabel.setFont(new Font("Courier",Font.PLAIN, 35));
         timeLabel.setBorder(BorderFactory.createBevelBorder(1));
         timeLabel.setOpaque(true);
         timeLabel.setHorizontalAlignment(JTextField.CENTER);
 
         startButton.setBounds(200,200,100,50);
-        startButton.setFont(new Font("Roboto", Font.PLAIN, 20));
+        startButton.setFont(new Font("Courier", Font.PLAIN, 20));
         startButton.setFocusable(false);
         startButton.addActionListener(this);
         startButton.setEnabled(false);
 
         setButton.setBounds(300,200,100,50);
-        setButton.setFont(new Font("Roboto", Font.PLAIN, 20));
+        setButton.setFont(new Font("Courier", Font.PLAIN, 20));
         setButton.setFocusable(false);
         setButton.addActionListener(this);
 
@@ -79,24 +86,29 @@ public class TimerProgram implements ActionListener {
 
     //Sets the stopwatch to the user input.
     public void set() {
-        int hrInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the hours you want to add (integer value)."));
-        int minInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the minutes you want to add (integer value)."));
-        int secInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the seconds you want to add (integer value)."));
+        int hrInput = 0;
+        int minInput = 0;
+        int secInput = 0;
 
-        elapsedTime = hrInput*3600000 + ; //updates time
-        hours = (elapsedTime/3600000); //updates hours 
-        minutes = (elapsedTime/60000) % 60; //updates minutes
-        seconds = (elapsedTime/1000) % 60;
+        try {
+            hrInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the hours you want to add (integer value)."));
+            minInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the minutes you want to add (integer value)."));
+            secInput = Integer.parseInt(JOptionPane.showInputDialog("Enter the seconds you want to add (integer value)."));
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Wrong input, try again!");
+        }
+
+        remainingTime = hrInput*3600000 + minInput*60000 + secInput*1000; //updates time
+        hours = remainingTime/3600000; //updates hours 
+        minutes = remainingTime/60000 % 60; //updates minutes
+        seconds = remainingTime/1000 % 60;
 
         secString = String.format("%02d", seconds);
         minString = String.format("%02d", minutes);
         hrString = String.format("%02d", hours);
             
-        timeLabel.setText(hrString + " : " + minString + " : " + secString);
-    }
-
-    public void setTime() {
-
+        timeLabel.setText(hrString + ":" + minString + ":" + secString);
     }
 
     public void actionPerformed(ActionEvent e) {

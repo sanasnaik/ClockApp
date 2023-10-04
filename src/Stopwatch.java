@@ -27,26 +27,26 @@ public class Stopwatch implements ActionListener {
             minString = String.format("%02d", minutes);
             hrString = String.format("%02d", hours);
             
-            timeLabel.setText(hrString + " : " + minString + " : " + secString);
+            timeLabel.setText(hrString + ":" + minString + ":" + secString);
         }
     });
 
     //Sets up the format of the window, labels, buttons etc.
     Stopwatch() {
-        timeLabel.setText(hrString + " : " + minString + " : " + secString);
+        timeLabel.setText(hrString + ":" + minString + ":" + secString);
         timeLabel.setBounds(200, 100, 200, 100);
-        timeLabel.setFont(new Font("Roboto",Font.PLAIN, 35));
+        timeLabel.setFont(new Font("Courier",Font.PLAIN, 35));
         timeLabel.setBorder(BorderFactory.createBevelBorder(1));
         timeLabel.setOpaque(true);
         timeLabel.setHorizontalAlignment(JTextField.CENTER);
 
         startButton.setBounds(200,200,100,50);
-        startButton.setFont(new Font("Roboto", Font.PLAIN, 20));
+        startButton.setFont(new Font("Courier", Font.PLAIN, 20));
         startButton.setFocusable(false);
         startButton.addActionListener(this);
 
         resetButton.setBounds(300,200,100,50);
-        resetButton.setFont(new Font("Roboto", Font.PLAIN, 20));
+        resetButton.setFont(new Font("Courier", Font.PLAIN, 20));
         resetButton.setFocusable(false);
         resetButton.addActionListener(this);
 
@@ -84,7 +84,7 @@ public class Stopwatch implements ActionListener {
         minString = String.format("%02d", minutes);
         hrString = String.format("%02d", hours);
             
-        timeLabel.setText(hrString + " : " + minString + " : " + secString);
+        timeLabel.setText(hrString + ":" + minString + ":" + secString);
     }
 
     @Override
