@@ -26,16 +26,6 @@ public class TimerProgram implements ActionListener {
     Timer timer = new Timer(1000, new ActionListener() { //every 1 second, do this
         public void actionPerformed(ActionEvent e) {
             remainingTime -= 1000; //updates time
-            hours = (remainingTime/3600000); //updates hours 
-            minutes = (remainingTime/60000) % 60; //updates minutes
-            seconds = (remainingTime/1000) % 60;
-
-            secString = String.format("%02d", seconds);
-            minString = String.format("%02d", minutes);
-            hrString = String.format("%02d", hours);
-            
-            timeLabel.setText(hrString + ":" + minString + ":" + secString);
-
             if (remainingTime <= 0) {
                 started = false;
                 startButton.setText("start");
@@ -54,6 +44,16 @@ public class TimerProgram implements ActionListener {
                 stop();
                 setButton.setEnabled(true);
             }
+
+            hours = (remainingTime/3600000); //updates hours 
+            minutes = (remainingTime/60000) % 60; //updates minutes
+            seconds = (remainingTime/1000) % 60;
+
+            secString = String.format("%02d", seconds);
+            minString = String.format("%02d", minutes);
+            hrString = String.format("%02d", hours);
+            
+            timeLabel.setText(hrString + ":" + minString + ":" + secString);
         }
     });
 
