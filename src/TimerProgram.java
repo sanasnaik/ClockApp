@@ -1,12 +1,15 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 public class TimerProgram implements ActionListener {
     JFrame frame = new JFrame();
+    Sound sound = new Sound();
 
     JButton startButton = new JButton("start");
-    //when pressed, timer starts countdown. only available if time is not 0.
+    //when pressed, timer starts countdown. 
+    //only available if time is not 0.
 
     JButton setButton = new JButton("set");
     //when pressed, opens a dialog box where you need to
@@ -19,30 +22,16 @@ public class TimerProgram implements ActionListener {
     int minutes = 0;
     int hours = 0;
     boolean started = false;
-    String secString = String.format("%02d", seconds);
-    String minString = String.format("%02d", minutes);
-    String hrString = String.format("%02d", hours);
-    
-    Timer timer = new Timer(1000, new ActionListener() { //every 1 second, do this
+    String secString;
+    String minString;
+    String hrString;
+
+    //every 1 second, do this
+    Timer timer = new Timer(1000, new ActionListener() { 
         public void actionPerformed(ActionEvent e) {
             remainingTime -= 1000; //updates time
             if (remainingTime <= 0) {
-                started = false;
-                startButton.setText("start");
-                
-                remainingTime = 0;
-                hours = 0;
-                minutes = 0;
-                seconds = 0;
-
-                secString = String.format("%02d", seconds);
-                minString = String.format("%02d", minutes);
-                hrString = String.format("%02d", hours);
-
-                timeLabel.setText(hrString + ":" + minString + ":" + secString);
-
-                stop();
-                setButton.setEnabled(true);
+                timeEnded();
             }
 
             hours = (remainingTime/3600000); //updates hours 
@@ -58,7 +47,7 @@ public class TimerProgram implements ActionListener {
     });
 
     TimerProgram() {
-        timeLabel.setText(hrString + ":" + minString + ":" + secString);
+        timeLabel.setText("00:00:00");
         timeLabel.setBounds(200, 100, 200, 100);
         timeLabel.setFont(new Font("Courier",Font.PLAIN, 35));
         timeLabel.setBorder(BorderFactory.createBevelBorder(1));
@@ -81,7 +70,7 @@ public class TimerProgram implements ActionListener {
         frame.add(timeLabel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600,500);
+        frame.setSize(600,400);
         frame.setTitle("Timer");
         frame.setLayout(null);
         frame.setResizable(false);
@@ -94,6 +83,24 @@ public class TimerProgram implements ActionListener {
 
     public void stop() {
         timer.stop();
+    }
+
+    //if the timer reaches 0, do this
+    public void timeEnded() {
+        started = false;
+        startButton.setText("start");
+                
+        remainingTime = 0;
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+
+        timeLabel.setText("00:00:00");
+
+        stop();
+        sound.setFile(0);
+        sound.play();
+        setButton.setEnabled(true);
     }
 
     //Sets the stopwatch to the user input.
@@ -148,5 +155,4 @@ public class TimerProgram implements ActionListener {
             startButton.setEnabled(true);
         }
     }
-
 }

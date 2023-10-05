@@ -55,7 +55,7 @@ public class Stopwatch implements ActionListener {
         frame.add(timeLabel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600,500);
+        frame.setSize(600,400);
         frame.setTitle("Stopwatch");
         frame.setLayout(null);
         frame.setResizable(false);
@@ -79,12 +79,8 @@ public class Stopwatch implements ActionListener {
         seconds = 0;
         minutes = 0;
         hours = 0;
-
-        secString = String.format("%02d", seconds);
-        minString = String.format("%02d", minutes);
-        hrString = String.format("%02d", hours);
             
-        timeLabel.setText(hrString + ":" + minString + ":" + secString);
+        timeLabel.setText("00:00:00");
     }
 
     @Override
